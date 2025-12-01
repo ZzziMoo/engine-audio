@@ -65,6 +65,7 @@ document.addEventListener('keyup', e => {
 });
 
 /* Initialization */
+const startBtn = document.getElementById('start_btn');
 const controls = document.getElementById('controls');
 
 
@@ -74,6 +75,7 @@ async function start() {
 
     loaded = true;
     
+    startBtn!.style.display = 'none';
     controls!.style.display = 'block';
 }
 
@@ -119,4 +121,12 @@ function update(time: DOMHighResTimeStamp): void {
 }
 
 update(10);
-start();
+/* Fake click to unlock WebAudio + auto start */
+window.addEventListener("load", () => {
+    // 模拟用户点击一次（绕过 autoplay 限制）
+    const evt = new MouseEvent("click", { bubbles: true, cancelable: true });
+    document.body.dispatchEvent(evt);
+
+    // 自动启动引擎
+    start();
+});
