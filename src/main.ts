@@ -4,8 +4,7 @@ import { Vehicle } from './Vehicle';
 import { clamp } from './util/clamp';
 import { initRpmSocket } from "./ws-rpm";
 
-initRpmSocket("ws://localhost:8765");
-
+initRpmSocket(`ws://${window.location.hostname}:8765`);
 let loaded = false;
 
 const settings = {
