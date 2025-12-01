@@ -1,6 +1,8 @@
 import { AudioManager, DynamicAudioNode } from "./AudioManager";
 import { Drivetrain } from "./Drivetrain";
 import { ratio } from "./util/ratio";
+import { getLatestRpm } from "./ws-rpm";  // 你 ws-rpm.ts 实际路径
+
 
 export class Engine {
 
@@ -95,7 +97,18 @@ export class Engine {
         this.dTheta = this.omega * dt;
 
         // this.omega = clamp(this.omega, 0, this.omega_max);
-        this.rpm = (60 * this.omega) / 2 * Math.PI;
+        
+        // WebSocket override RPM
+        const remoteRpm = getLatestRpm();
+
+        if (remoteRpm > 0) {
+            // Tesla CAN delivers real RPM
+            this.rpm = remoteRpm;
+        } else {
+            // Fallback to internal physics
+            // 修正括号：物理公式本来就应该是 / (2 * Math.PI)
+            this.rpm = (60 * this.omega) / (2 * Math.PI);
+}
 
     }
 

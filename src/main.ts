@@ -2,6 +2,9 @@ import * as dat from 'dat.gui';
 import * as configurations from './configurations';
 import { Vehicle } from './Vehicle';
 import { clamp } from './util/clamp';
+import { initRpmSocket } from "./ws-rpm";
+
+initRpmSocket("ws://localhost:8765");
 
 let loaded = false;
 
