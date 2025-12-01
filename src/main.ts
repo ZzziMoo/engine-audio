@@ -5,6 +5,7 @@ import { clamp } from './util/clamp';
 import { initRpmSocket } from "./ws-rpm";
 
 initRpmSocket(`ws://${window.location.hostname}:8765`);
+
 let loaded = false;
 
 const settings = {
@@ -64,11 +65,8 @@ document.addEventListener('keyup', e => {
 });
 
 /* Initialization */
-const startBtn = document.getElementById('start_btn');
 const controls = document.getElementById('controls');
 
-startBtn?.addEventListener('click', start, {once : true})
-document.querySelector('select')?.addEventListener('change', start)
 
 async function start() {
     // @ts-ignore
@@ -76,7 +74,6 @@ async function start() {
 
     loaded = true;
     
-    startBtn!.style.display = 'none';
     controls!.style.display = 'block';
 }
 
@@ -122,3 +119,4 @@ function update(time: DOMHighResTimeStamp): void {
 }
 
 update(10);
+start();
